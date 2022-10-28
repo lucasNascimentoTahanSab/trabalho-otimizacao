@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import DisciplineRegister from './components/DisciplineRegister/DisciplineRegister';
 
 function App() {
+  const [disciplines, setDisciplines] = useState([]);
+
+  const updateDiscipline = (event) => {
+    const discipline = getDisciplineById(event.target.dataset.id);
+
+    discipline[event.target.dataset.name] = event.target.value;
+  }
+
+  function getDisciplineById(disciplineId) {
+    return disciplines.find(discipline => discipline.id === disciplineId);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <DisciplineRegister disciplines={disciplines} setDisciplines={setDisciplines} updateDiscipline={updateDiscipline} />
     </div>
   );
 }
