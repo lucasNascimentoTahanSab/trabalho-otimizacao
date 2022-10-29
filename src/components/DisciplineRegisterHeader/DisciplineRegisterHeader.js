@@ -12,7 +12,7 @@ function DisciplineRegisterHeader(props) {
 
   return (
     <header className="to-register__header">
-      <h2>Cadastrar disciplinar</h2>
+      <h2>Cadastrar disciplinas</h2>
       <ButtonAdd onClick={addDiscipline} />
     </header>
   )
