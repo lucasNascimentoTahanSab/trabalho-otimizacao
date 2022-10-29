@@ -46,9 +46,9 @@ function DisciplineInsertion(props) {
 
   return (
     <div className="to-insertion__row">
-      <InputText value={discipline?.name} onInput={onNameInput} id={discipline.id} name="name" />
-      <InputNumber value={discipline?.courseLoad} onInput={onCourseLoadInput} id={discipline.id} name="courseLoad" />
-      <InputCurrency value={discipline?.price} onInput={onPriceInput} id={discipline.id} name="price" />
+      <InputText value={discipline.name} onInput={onNameInput} id={discipline.id} name="name" />
+      <InputNumber value={discipline.courseLoad} onInput={onCourseLoadInput} id={discipline.id} name="courseLoad" />
+      <InputCurrency value={discipline.price} onInput={onPriceInput} id={discipline.id} name="price" />
       <ButtonDelete onClick={deleteDiscipline} />
     </div>
   )

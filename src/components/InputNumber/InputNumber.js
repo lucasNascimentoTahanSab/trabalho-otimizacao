@@ -7,9 +7,21 @@ function InputNumber(props) {
     props.onInput(event);
   }
 
+  function getLabel() {
+    return props.label ? (<label htmlFor={props.id + props.name}>{props.label}</label>) : null;
+  }
+
   return (
     <div className="to-input__container">
-      <input className="to-input__item" value={props.value} onInput={onInput} data-id={props.id} data-name={props.name}></input>
+      {getLabel()}
+      <input
+        className="to-input__item"
+        id={props.id + props.name}
+        value={props.value}
+        data-id={props.id}
+        data-name={props.name}
+        onInput={onInput}>
+      </input>
     </div>
   );
 }
