@@ -25,19 +25,25 @@ function OptimizeCostBody(props) {
 
   return (
     <section>
-      <header>
-        <h3>Restrições</h3>
-      </header>
-      <InputNumber
-        label="Carga horária máxima por semestre"
-        name="maximumCourseLoad"
-        value={costConstrains.maximumCourseLoad}
-        onInput={onMaximumCourseLoadInput} />
-      <InputNumber
-        label="Quantidade mínima de disciplinas"
-        name="minimumCourses"
-        value={costConstrains.minimumCourses}
-        onInput={onMinimumCoursesInput} />
+      {
+        props.show ?
+          <div>
+            <header>
+              <h3>Restrições</h3>
+            </header>
+            <InputNumber
+              label="Carga horária máxima por semestre"
+              name="maximumCourseLoad"
+              value={costConstrains.maximumCourseLoad}
+              onInput={onMaximumCourseLoadInput} />
+            <InputNumber
+              label="Quantidade mínima de disciplinas"
+              name="minimumCourses"
+              value={costConstrains.minimumCourses}
+              onInput={onMinimumCoursesInput} />
+          </div>
+          : null
+      }
     </section>
   );
 }
