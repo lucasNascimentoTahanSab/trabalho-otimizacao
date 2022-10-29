@@ -11,11 +11,9 @@ export default class Schedule {
    */
   _getScheduleMatrix() {
     return [
-      [0, 0, 0],
-      [0, 0, 0],
-      [0, 0, 0],
-      [0, 0, 0],
-      [0, 0, 0]
+      [false, false, false, false, false],
+      [false, false, false, false, false],
+      [false, false, false, false, false]
     ];
   }
 }

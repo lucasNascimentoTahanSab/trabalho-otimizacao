@@ -1,12 +1,23 @@
 import React, { useState } from "react";
+import ButtonSchedule from "../ButtonSchedule/ButtonSchedule";
 import ButtonDelete from "../ButtonDelete/ButtonDelete";
 import InputNumber from "../InputNumber/InputNumber";
 import InputCurrency from "../InputCurrency/InputCurrency";
 import InputText from "../InputText/InputText";
 import Discipline from "../../classes/Discipline/Discipline";
+import ModalSchedule from "../ModalSchedule/ModalSchedule";
 
 function DisciplineInsertion(props) {
   const [discipline, setDiscipline] = useState(props.discipline);
+  const [isModalScheduleOpen, setModalScheduleOpen] = useState(false);
+
+  const openSchedule = () => {
+    setModalScheduleOpen(true);
+  }
+
+  const closeSchedule = () => {
+    setModalScheduleOpen(false);
+  }
 
   const deleteDiscipline = () => {
     if (typeof props.setDisciplines !== 'function') { return; }
@@ -49,7 +60,13 @@ function DisciplineInsertion(props) {
       <InputText value={discipline.name} onInput={onNameInput} id={discipline.id} name="name" />
       <InputNumber value={discipline.courseLoad} onInput={onCourseLoadInput} id={discipline.id} name="courseLoad" />
       <InputCurrency value={discipline.price} onInput={onPriceInput} id={discipline.id} name="price" />
+      <ButtonSchedule onClick={openSchedule} />
       <ButtonDelete onClick={deleteDiscipline} />
+      <ModalSchedule
+        isOpen={isModalScheduleOpen}
+        closeModal={closeSchedule}
+        discipline={discipline}
+        updateDisciplineSchedule={props.updateDisciplineSchedule} />
     </div>
   )
 }

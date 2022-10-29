@@ -10,10 +10,16 @@ function App() {
   const [timeConstrains, setTimeConstrains] = useState(new TimeConstrains());
   const [costConstrains, setCostConstrains] = useState(new CostConstrains());
 
-  const updateDiscipline = (event) => {
+  const updateDiscipline = event => {
     const discipline = getDisciplineById(event.target.dataset.id);
 
     discipline[event.target.dataset.name] = event.target.value;
+  }
+
+  const updateDisciplineSchedule = (disciplineId, schedule) => {
+    const discipline = getDisciplineById(disciplineId);
+
+    discipline.schedule = schedule;
   }
 
   function getDisciplineById(disciplineId) {
@@ -22,7 +28,11 @@ function App() {
 
   return (
     <div className="App">
-      <DisciplineRegister disciplines={disciplines} setDisciplines={setDisciplines} updateDiscipline={updateDiscipline} />
+      <DisciplineRegister
+        disciplines={disciplines}
+        setDisciplines={setDisciplines}
+        updateDiscipline={updateDiscipline}
+        updateDisciplineSchedule={updateDisciplineSchedule} />
       <OptimizationConditions
         timeConstrains={timeConstrains}
         setTimeConstrains={setTimeConstrains}
