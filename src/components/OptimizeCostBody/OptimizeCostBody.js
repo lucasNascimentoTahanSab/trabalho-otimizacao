@@ -1,26 +1,28 @@
 import React, { useState } from "react";
-import CostConstrains from '../../classes/CostConstrains/CostConstrains';
+import CostConstraints from '../../classes/CostConstraints/CostConstraints';
 import InputNumber from "../InputNumber/InputNumber";
 
 function OptimizeCostBody(props) {
-  const [costConstrains, setCostConstrains] = useState(new CostConstrains(props.costConstrains));
+  const [costConstraints, setCostConstraints] = useState(new CostConstraints(props.costConstraints));
 
   const onMaximumCourseLoadInput = event => {
-    if (typeof props.setCostConstrains !== 'function') { return; }
+    if (typeof props.setCostConstraints !== 'function') { return; }
 
-    const costConstrainsUpdated = new CostConstrains({ ...costConstrains, maximumCourseLoad: event.target.value });
+    const costConstraintsUpdated = new CostConstraints({ ...costConstraints, maximumCourseLoad: event.target.value });
 
-    setCostConstrains(costConstrainsUpdated);
-    props.setCostConstrains(costConstrainsUpdated);
+    setCostConstraints(costConstraintsUpdated);
+    props.setCostConstraints(costConstraintsUpdated);
+    props.updateOptimizationRequest(costConstraintsUpdated);
   }
 
   const onMinimumCoursesInput = event => {
-    if (typeof props.setCostConstrains !== 'function') { return; }
+    if (typeof props.setCostConstraints !== 'function') { return; }
 
-    const costConstrainsUpdated = new CostConstrains({ ...costConstrains, minimumCourses: event.target.value });
+    const costConstraintsUpdated = new CostConstraints({ ...costConstraints, minimumCourses: event.target.value });
 
-    setCostConstrains(costConstrainsUpdated);
-    props.setCostConstrains(costConstrainsUpdated);
+    setCostConstraints(costConstraintsUpdated);
+    props.setCostConstraints(costConstraintsUpdated);
+    props.updateOptimizationRequest(costConstraintsUpdated);
   }
 
   return (
@@ -34,12 +36,12 @@ function OptimizeCostBody(props) {
             <InputNumber
               label="Carga horária máxima por semestre"
               name="maximumCourseLoad"
-              value={costConstrains.maximumCourseLoad}
+              value={costConstraints.maximumCourseLoad}
               onInput={onMaximumCourseLoadInput} />
             <InputNumber
               label="Quantidade mínima de disciplinas"
               name="minimumCourses"
-              value={costConstrains.minimumCourses}
+              value={costConstraints.minimumCourses}
               onInput={onMinimumCoursesInput} />
           </div>
           : null

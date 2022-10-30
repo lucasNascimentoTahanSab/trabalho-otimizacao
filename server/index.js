@@ -9,7 +9,8 @@ app.use(express.json());
 
 app.post('/optimize', (req, res) => {
   try {
-    res.send(solver.Solve(req.body));
+    console.log(req.body);
+    // res.send(solver.Solve(req.body));
   } catch (error) {
     res.status(500);
     res.statusMessage = 'Não foi possível solucionar o modelo proposto.';

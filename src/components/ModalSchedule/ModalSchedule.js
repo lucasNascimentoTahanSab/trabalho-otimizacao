@@ -12,7 +12,7 @@ function ModalSchedule(props) {
   const selectSchedule = event => {
     const schedule = { ...discipline.schedule };
 
-    schedule.matrix[event.target.dataset.row][event.target.dataset.col] = event.target.checked;
+    schedule.matrix[event.target.dataset.row][event.target.dataset.col] = event.target.checked ? 1 : 0;
 
     setDiscipline(new Discipline({ ...discipline, schedule }));
 

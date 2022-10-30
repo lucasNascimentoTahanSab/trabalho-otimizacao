@@ -4,6 +4,7 @@ export default class Discipline {
   static ID = 0;
 
   constructor(discipline) {
+    this.quantity = 1;
     this.id = discipline?.id ?? (Discipline.ID++).toString();
     this.name = discipline?.name ?? '';
     this.courseLoad = discipline?.courseLoad ?? 0.0;

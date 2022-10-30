@@ -1,17 +1,11 @@
 import React from "react";
-import OptimizationRequest from "../../classes/OptimizationRequest/OptimizationRequest";
 
 function Solver(props) {
   const solve = () => {
     fetch('/optimize', {
       method: 'POST',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(new OptimizationRequest({
-        variables: props.variables,
-        params: props.params
-      }))
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(props.body)
     })
       .then(result => console.log(result))
       .catch(error => console.log(error));

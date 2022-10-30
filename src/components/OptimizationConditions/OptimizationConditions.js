@@ -7,10 +7,12 @@ function OptimizationConditions(props) {
     <div>
       <OptimizationHeader title="Otimizar matrícula" />
       <OptimizationConditionsBody
-        timeConstrains={props.timeConstrains}
-        setTimeConstrains={props.setTimeConstrains}
-        costConstrains={props.costConstrains}
-        setCostConstrains={props.setCostConstrains} />
+        timeConstraints={props.timeConstraints}
+        setTimeConstraints={props.setTimeConstraints}
+        costConstraints={props.costConstraints}
+        setCostConstraints={props.setCostConstraints}
+        optimizationRequest={props.optimizationRequest}
+        setOptimizationRequest={props.setOptimizationRequest} />
     </div>
   );
 }
