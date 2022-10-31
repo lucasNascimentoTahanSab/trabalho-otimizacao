@@ -9,7 +9,8 @@ function DisciplineRegisterBody(props) {
         discipline={discipline}
         disciplines={props.disciplines}
         setDisciplines={props.setDisciplines}
-        updateDiscipline={props.updateDiscipline} />
+        updateDiscipline={props.updateDiscipline}
+        updateDisciplineSchedule={props.updateDisciplineSchedule} />
     );
   }
 

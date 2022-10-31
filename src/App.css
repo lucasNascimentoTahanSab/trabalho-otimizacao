@@ -24,3 +24,7 @@
 .to-input__item {
   width: 100%;
 }
+
+.to-optimization__header {
+  cursor: pointer;
+}

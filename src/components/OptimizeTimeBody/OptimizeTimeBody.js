@@ -1,44 +1,52 @@
 import React, { useState } from "react";
-import CostConstrains from '../../classes/CostConstrains/CostConstrains';
+import TimeConstraints from '../../classes/TimeConstraints/TimeConstraints';
 import InputCurrency from "../InputCurrency/InputCurrency";
 import InputNumber from "../InputNumber/InputNumber";
 
 function OptimizeTimeBody(props) {
-  const [timeConstrains, setTimeConstrains] = useState(new CostConstrains(props.timeConstrains));
+  const [timeConstraints, setTimeConstraints] = useState(new TimeConstraints(props.timeConstraints));
 
   const onMaximumCourseLoadInput = event => {
-    if (typeof props.setTimeConstrains !== 'function') { return; }
+    if (typeof props.setTimeConstraints !== 'function') { return; }
 
-    const timeConstrainsUpdated = new CostConstrains({ ...timeConstrains, maximumCourseLoad: event.target.value });
+    const timeConstraintsUpdated = new TimeConstraints({ ...timeConstraints, maximumCourseLoad: event.target.value });
 
-    setTimeConstrains(timeConstrainsUpdated);
-    props.setTimeConstrains(timeConstrainsUpdated);
+    setTimeConstraints(timeConstraintsUpdated);
+    props.setTimeConstraints(timeConstraintsUpdated);
+    props.updateOptimizationRequest(timeConstraintsUpdated);
   }
 
   const onMaximumCostInput = event => {
-    if (typeof props.setTimeConstrains !== 'function') { return; }
+    if (typeof props.setTimeConstraints !== 'function') { return; }
 
-    const timeConstrainsUpdated = new CostConstrains({ ...timeConstrains, maximumCost: event.target.value });
+    const timeConstraintsUpdated = new TimeConstraints({ ...timeConstraints, maximumCost: event.target.value });
 
-    setTimeConstrains(timeConstrainsUpdated);
-    props.setTimeConstrains(timeConstrainsUpdated);
+    setTimeConstraints(timeConstraintsUpdated);
+    props.setTimeConstraints(timeConstraintsUpdated);
+    props.updateOptimizationRequest(timeConstraintsUpdated);
   }
 
   return (
     <section>
-      <header>
-        <h3>Restrições</h3>
-      </header>
-      <InputNumber
-        label="Carga horária máxima por semestre"
-        name="maximumCourseLoad"
-        value={timeConstrains.maximumCourseLoad}
-        onInput={onMaximumCourseLoadInput} />
-      <InputCurrency
-        label="Custo máximo por semestre"
-        name="maximumCost"
-        value={timeConstrains.maximumCost}
-        onInput={onMaximumCostInput} />
+      {
+        props.show ?
+          <div>
+            <header>
+              <h3>Restrições</h3>
+            </header>
+            <InputNumber
+              label="Carga horária máxima por semestre"
+              name="maximumCourseLoad"
+              value={timeConstraints.maximumCourseLoad}
+              onInput={onMaximumCourseLoadInput} />
+            <InputCurrency
+              label="Custo máximo por semestre"
+              name="maximumCost"
+              value={timeConstraints.maximumCost}
+              onInput={onMaximumCostInput} />
+          </div>
+          : null
+      }
     </section>
   );
 }

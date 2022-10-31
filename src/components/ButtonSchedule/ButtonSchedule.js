@@ -1,6 +1,6 @@
 import React from "react";
 
-function OptimizeHeader(props) {
+function ButtonSchedule(props) {
   const onClick = event => {
     if (typeof props.onClick !== 'function') { return; }
 
@@ -8,10 +8,8 @@ function OptimizeHeader(props) {
   }
 
   return (
-    <header className="to-optimization__header" onClick={onClick}>
-      <h2>{props.title}</h2>
-    </header>
+    <button onClick={onClick}>.</button>
   );
 }
 
-export default OptimizeHeader;
+export default ButtonSchedule;
