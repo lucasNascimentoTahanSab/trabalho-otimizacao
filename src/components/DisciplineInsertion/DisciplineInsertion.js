@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ButtonSchedule from "../ButtonSchedule/ButtonSchedule";
 import ButtonDelete from "../ButtonDelete/ButtonDelete";
 import InputNumber from "../InputNumber/InputNumber";
 import InputCurrency from "../InputCurrency/InputCurrency";
 import InputText from "../InputText/InputText";
-import Discipline from "../../classes/Discipline/Discipline";
 import ModalSchedule from "../ModalSchedule/ModalSchedule";
+import { OptimizationRequestGlobal } from "../OptimizationRequestContext/OptimizationRequestContext";
+import Discipline from "../../classes/Discipline/Discipline";
 
 function DisciplineInsertion(props) {
+  const optimizationRequest = useContext(OptimizationRequestGlobal);
   const [discipline, setDiscipline] = useState(props.discipline);
   const [isModalScheduleOpen, setModalScheduleOpen] = useState(false);
 
@@ -20,39 +22,40 @@ function DisciplineInsertion(props) {
   }
 
   const deleteDiscipline = () => {
-    if (typeof props.setDisciplines !== 'function') { return; }
-    if (typeof props.discipline !== 'object') { return; }
-    if (!Array.isArray(props.disciplines)) { return; }
+    props.setDisciplines(getDisciplinesDifferentThan(discipline?.id));
 
-    props.setDisciplines(_getDisciplinesDifferentThan(props.discipline?.id));
+    delete optimizationRequest.variables[discipline?.id];
   }
 
-  function _getDisciplinesDifferentThan(disciplineId) {
-    return props.disciplines?.filter(discipline => discipline.id !== disciplineId);
+  function getDisciplinesDifferentThan(disciplineId) {
+    return props.disciplines.filter(discipline => discipline.id !== disciplineId);
   }
 
   const onNameInput = event => {
-    if (typeof props.updateDiscipline !== 'function') { return; }
+    const newDiscipline = new Discipline({ ...discipline, name: event.target.value })
 
-    setDiscipline(new Discipline({ ...discipline, name: event.target.value }));
+    optimizationRequest.variables[newDiscipline.id].name = event.target.value;
 
-    props.updateDiscipline(event);
+    setDiscipline(newDiscipline);
+    props.setDisciplines(props.disciplines);
   }
 
   const onCourseLoadInput = event => {
-    if (typeof props.updateDiscipline !== 'function') { return; }
+    const newDiscipline = new Discipline({ ...discipline, courseLoad: parseFloat(event.target.value) })
 
-    setDiscipline(new Discipline({ ...discipline, courseLoad: event.target.value }));
+    optimizationRequest.variables[newDiscipline.id].courseLoad = parseFloat(event.target.value);
 
-    props.updateDiscipline(event);
+    setDiscipline(newDiscipline);
+    props.setDisciplines(props.disciplines);
   }
 
   const onPriceInput = event => {
-    if (typeof props.updateDiscipline !== 'function') { return; }
+    const newDiscipline = new Discipline({ ...discipline, price: parseFloat(event.target.value) })
 
-    setDiscipline(new Discipline({ ...discipline, price: event.target.value }));
+    optimizationRequest.variables[newDiscipline.id].price = parseFloat(event.target.value);
 
-    props.updateDiscipline(event);
+    setDiscipline(newDiscipline);
+    props.setDisciplines(props.disciplines);
   }
 
   return (
@@ -66,7 +69,9 @@ function DisciplineInsertion(props) {
         isOpen={isModalScheduleOpen}
         closeModal={closeSchedule}
         discipline={discipline}
-        updateDisciplineSchedule={props.updateDisciplineSchedule} />
+        setDiscipline={setDiscipline}
+        disciplines={props.disciplines}
+        setDisciplines={props.setDisciplines} />
     </div>
   )
 }

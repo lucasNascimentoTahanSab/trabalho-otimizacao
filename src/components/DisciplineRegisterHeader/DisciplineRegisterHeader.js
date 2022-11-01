@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import Discipline from "../../classes/Discipline/Discipline";
 import ButtonAdd from "../ButtonAdd/ButtonAdd";
+import { OptimizationRequestGlobal } from "../OptimizationRequestContext/OptimizationRequestContext";
 
 function DisciplineRegisterHeader(props) {
-  const addDiscipline = () => {
-    if (typeof props.setDisciplines !== 'function') { return; }
-    if (!Array.isArray(props.disciplines)) { return; }
+  const optimizationRequest = useContext(OptimizationRequestGlobal);
 
-    props.setDisciplines([...props.disciplines, new Discipline()]);
+  const addDiscipline = () => {
+    const discipline = new Discipline();
+
+    addDisciplineToOptimizationRequest(discipline);
+    props.setDisciplines([...props.disciplines, discipline]);
+  }
+
+  function addDisciplineToOptimizationRequest(discipline) {
+    optimizationRequest.variables[discipline.id] = discipline;
   }
 
   return (

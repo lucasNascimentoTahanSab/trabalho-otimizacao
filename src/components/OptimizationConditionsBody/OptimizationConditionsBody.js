@@ -2,49 +2,19 @@ import React, { useState } from "react";
 import OptimizeHeader from "../OptimizeHeader/OptimizeHeader";
 import OptimizeTimeBody from "../OptimizeTimeBody/OptimizeTimeBody";
 import OptimizeCostBody from "../OptimizeCostBody/OptimizeCostBody";
-import OptimizationRequest from '../../classes/OptimizationRequest/OptimizationRequest';
 
 function OptimizationConditionsBody(props) {
   const [displayingOptimizeTime, setOptimizeTimeDisplay] = useState(true);
   const [displayingOptimizeCost, setOptimizeCostDisplay] = useState(false);
-  const [optimizationRequest, setOptimizationRequest] = useState(props.optimizationRequest);
 
   const displayOptimizeTime = () => {
     setOptimizeTimeDisplay(true);
     setOptimizeCostDisplay(false);
-    updateOptimizationRequest();
   }
 
   const displayOptimizeCost = () => {
     setOptimizeTimeDisplay(false);
     setOptimizeCostDisplay(true);
-    updateOptimizationRequest();
-  }
-
-  const updateOptimizationRequest = (constrains) => {
-    const newOptimizationRequest = new OptimizationRequest({
-      ...optimizationRequest,
-      optimize: displayingOptimizeTime ? 'quantity' : 'price',
-      opType: displayingOptimizeTime ? 'max' : 'min',
-      constraints: displayingOptimizeTime ? getTimeOptimizationConstraints(constrains) : getCostOptimizationConstraints(constrains)
-    });
-
-    setOptimizationRequest(newOptimizationRequest);
-    props.setOptimizationRequest(newOptimizationRequest);
-  }
-
-  function getTimeOptimizationConstraints(constrains) {
-    return {
-      price: { max: constrains.maximumCost },
-      courseLoad: { max: constrains.maximumCourseLoad }
-    };
-  }
-
-  function getCostOptimizationConstraints(constrains) {
-    return {
-      quantity: { min: constrains.minimumCourses },
-      courseLoad: { max: constrains.maximumCourseLoad }
-    };
   }
 
   return (
@@ -56,14 +26,14 @@ function OptimizationConditionsBody(props) {
       <div>
         <OptimizeTimeBody
           show={displayingOptimizeTime}
+          disciplines={props.disciplines}
           timeConstraints={props.timeConstraints}
-          setTimeConstraints={props.setTimeConstraints}
-          updateOptimizationRequest={updateOptimizationRequest} />
+          setTimeConstraints={props.setTimeConstraints} />
         <OptimizeCostBody
           show={displayingOptimizeCost}
+          disciplines={props.disciplines}
           costConstraints={props.costConstraints}
-          setCostConstraints={props.setCostConstraints}
-          updateOptimizationRequest={updateOptimizationRequest} />
+          setCostConstraints={props.setCostConstraints} />
       </div>
     </div>
   );
