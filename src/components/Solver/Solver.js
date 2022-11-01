@@ -17,8 +17,8 @@ function Solver(props) {
   }
 
   return (
-    <footer>
-      <button onClick={solve}>Solucionar</button>
+    <footer className="to-solver">
+      <button className="to-button to-button--solve" onClick={solve}>Solucionar</button>
     </footer>
   );
 }

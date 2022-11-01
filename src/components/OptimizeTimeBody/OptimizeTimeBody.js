@@ -60,19 +60,21 @@ function OptimizeTimeBody(props) {
       {
         props.show ?
           <div>
-            <header>
+            <header className="to-header">
               <h3>Restrições</h3>
             </header>
-            <InputNumber
-              label="Carga horária máxima por semestre"
-              name="maximumCourseLoad"
-              value={timeConstraints.maximumCourseLoad}
-              onInput={onMaximumCourseLoadInput} />
-            <InputCurrency
-              label="Custo máximo por semestre"
-              name="maximumCost"
-              value={timeConstraints.maximumCost}
-              onInput={onMaximumCostInput} />
+            <div className="to-constraints__section">
+              <InputNumber
+                label="Carga horária máxima por semestre"
+                name="maximumCourseLoad"
+                value={timeConstraints.maximumCourseLoad}
+                onInput={onMaximumCourseLoadInput} />
+              <InputCurrency
+                label="Custo máximo por semestre"
+                name="maximumCost"
+                value={timeConstraints.maximumCost}
+                onInput={onMaximumCostInput} />
+            </div>
           </div>
           : null
       }

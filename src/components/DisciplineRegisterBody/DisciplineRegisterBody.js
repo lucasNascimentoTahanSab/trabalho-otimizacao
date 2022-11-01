@@ -13,9 +13,20 @@ function DisciplineRegisterBody(props) {
   }
 
   return (
-    <div>
-      {loadDisciplines()}
-    </div>
+    <table className="to-disciplines__section">
+      <thead>
+        <tr>
+          <th className="to-table__data--left">Nome</th>
+          <th className="to-table__data--left">Carga horária</th>
+          <th className="to-table__data--left">Mensalidade</th>
+          <th>Horários</th>
+          <th className="to-table__data--right"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {loadDisciplines()}
+      </tbody>
+    </table>
   );
 }
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import OptimizeHeader from "../OptimizeHeader/OptimizeHeader";
+import MenuItem from "../MenuItem/MenuItem";
 import OptimizeTimeBody from "../OptimizeTimeBody/OptimizeTimeBody";
 import OptimizeCostBody from "../OptimizeCostBody/OptimizeCostBody";
 
@@ -18,12 +18,12 @@ function OptimizationConditionsBody(props) {
   }
 
   return (
-    <div>
-      <div>
-        <OptimizeHeader onClick={displayOptimizeTime} title="Minimizar o tempo para conclusão do curso" />
-        <OptimizeHeader onClick={displayOptimizeCost} title="Minimizar o valor total gasto por semestre" />
-      </div>
-      <div>
+    <section>
+      <menu className="to-menu">
+        <MenuItem onClick={displayOptimizeTime} title="Minimizar o tempo para conclusão do curso" />
+        <MenuItem onClick={displayOptimizeCost} title="Minimizar o valor total gasto por semestre" />
+      </menu>
+      <section className="to-menu__section">
         <OptimizeTimeBody
           show={displayingOptimizeTime}
           disciplines={props.disciplines}
@@ -34,8 +34,8 @@ function OptimizationConditionsBody(props) {
           disciplines={props.disciplines}
           costConstraints={props.costConstraints}
           setCostConstraints={props.setCostConstraints} />
-      </div>
-    </div>
+      </section>
+    </section>
   );
 }
 

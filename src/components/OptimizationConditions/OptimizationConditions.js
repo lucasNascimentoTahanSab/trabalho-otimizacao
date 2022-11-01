@@ -1,11 +1,11 @@
 import React from "react";
 import OptimizationConditionsBody from "../OptimizationConditionsBody/OptimizationConditionsBody";
-import OptimizationHeader from "../OptimizationHeader/OptimizationHeader";
+import HeaderBasic from "../HeaderBasic/HeaderBasic";
 
 function OptimizationConditions(props) {
   return (
-    <div>
-      <OptimizationHeader title="Otimizar matrícula" />
+    <section>
+      <HeaderBasic title="Otimizar matrícula" />
       <OptimizationConditionsBody
         disciplines={props.disciplines}
         timeConstraints={props.timeConstraints}
@@ -13,7 +13,7 @@ function OptimizationConditions(props) {
         costConstraints={props.costConstraints}
         setCostConstraints={props.setCostConstraints}
         setOptimizationRequest={props.setOptimizationRequest} />
-    </div>
+    </section>
   );
 }
 

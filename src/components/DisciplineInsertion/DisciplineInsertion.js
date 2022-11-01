@@ -22,6 +22,8 @@ function DisciplineInsertion(props) {
   }
 
   const deleteDiscipline = () => {
+    if (props.disciplines.length === 1) { return; }
+
     props.setDisciplines(getDisciplinesDifferentThan(discipline?.id));
 
     delete optimizationRequest.variables[discipline?.id];
@@ -59,12 +61,22 @@ function DisciplineInsertion(props) {
   }
 
   return (
-    <div className="to-insertion__row">
-      <InputText value={discipline.name} onInput={onNameInput} id={discipline.id} name="name" />
-      <InputNumber value={discipline.courseLoad} onInput={onCourseLoadInput} id={discipline.id} name="courseLoad" />
-      <InputCurrency value={discipline.price} onInput={onPriceInput} id={discipline.id} name="price" />
-      <ButtonSchedule onClick={openSchedule} />
-      <ButtonDelete onClick={deleteDiscipline} />
+    <tr>
+      <td>
+        <InputText value={discipline.name} onInput={onNameInput} id={discipline.id} name="name" />
+      </td>
+      <td>
+        <InputNumber value={discipline.courseLoad} onInput={onCourseLoadInput} id={discipline.id} name="courseLoad" />
+      </td>
+      <td>
+        <InputCurrency value={discipline.price} onInput={onPriceInput} id={discipline.id} name="price" />
+      </td>
+      <td className="to-table__data--center">
+        <ButtonSchedule onClick={openSchedule} />
+      </td>
+      <td className="to-table__data--right">
+        <ButtonDelete onClick={deleteDiscipline} />
+      </td>
       <ModalSchedule
         isOpen={isModalScheduleOpen}
         closeModal={closeSchedule}
@@ -72,7 +84,7 @@ function DisciplineInsertion(props) {
         setDiscipline={setDiscipline}
         disciplines={props.disciplines}
         setDisciplines={props.setDisciplines} />
-    </div>
+    </tr>
   )
 }
 

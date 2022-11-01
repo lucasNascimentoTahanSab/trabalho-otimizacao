@@ -1,6 +1,6 @@
 import React from "react";
 
-function OptimizeHeader(props) {
+function MenuItem(props) {
   const onClick = event => {
     if (typeof props.onClick !== 'function') { return; }
 
@@ -8,10 +8,10 @@ function OptimizeHeader(props) {
   }
 
   return (
-    <header className="to-optimization__header" onClick={onClick}>
-      <h2>{props.title}</h2>
-    </header>
+    <li className="to-menu__item">
+      <button className="to-button" onClick={onClick}>{props.title}</button>
+    </li>
   );
 }
 
-export default OptimizeHeader;
+export default MenuItem;
