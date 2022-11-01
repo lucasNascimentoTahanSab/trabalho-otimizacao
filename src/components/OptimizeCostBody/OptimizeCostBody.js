@@ -11,7 +11,7 @@ function OptimizeCostBody(props) {
   const onMaximumCourseLoadInput = event => {
     if (typeof props.setCostConstraints !== 'function') { return; }
 
-    const costConstraintsUpdated = new CostConstraintParameters({ ...costConstraints, maximumCourseLoad: event.target.value });
+    const costConstraintsUpdated = new CostConstraintParameters({ ...costConstraints, maximumCourseLoad: parseFloat(event.target.value) });
 
     updateOptimizationRequest(costConstraintsUpdated);
     setCostConstraints(costConstraintsUpdated);
@@ -21,7 +21,7 @@ function OptimizeCostBody(props) {
   const onMinimumCoursesInput = event => {
     if (typeof props.setCostConstraints !== 'function') { return; }
 
-    const costConstraintsUpdated = new CostConstraintParameters({ ...costConstraints, minimumCourses: event.target.value });
+    const costConstraintsUpdated = new CostConstraintParameters({ ...costConstraints, minimumCourses: parseFloat(event.target.value) });
 
     updateOptimizationRequest(costConstraintsUpdated);
     setCostConstraints(costConstraintsUpdated);

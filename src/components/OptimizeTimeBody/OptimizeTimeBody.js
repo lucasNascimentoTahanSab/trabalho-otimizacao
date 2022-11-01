@@ -12,7 +12,7 @@ function OptimizeTimeBody(props) {
   const onMaximumCourseLoadInput = event => {
     if (typeof props.setTimeConstraints !== 'function') { return; }
 
-    const timeConstraintsUpdated = new TimeConstraintParameters({ ...timeConstraints, maximumCourseLoad: event.target.value });
+    const timeConstraintsUpdated = new TimeConstraintParameters({ ...timeConstraints, maximumCourseLoad: parseFloat(event.target.value) });
 
     setOptimizationRequest(timeConstraintsUpdated);
     setTimeConstraints(timeConstraintsUpdated);
@@ -22,7 +22,7 @@ function OptimizeTimeBody(props) {
   const onMaximumCostInput = event => {
     if (typeof props.setTimeConstraints !== 'function') { return; }
 
-    const timeConstraintsUpdated = new TimeConstraintParameters({ ...timeConstraints, maximumCost: event.target.value });
+    const timeConstraintsUpdated = new TimeConstraintParameters({ ...timeConstraints, maximumCost: parseFloat(event.target.value) });
 
     setOptimizationRequest(timeConstraintsUpdated);
     setTimeConstraints(timeConstraintsUpdated);

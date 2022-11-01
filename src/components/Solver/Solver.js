@@ -4,21 +4,25 @@ import { OptimizationRequestGlobal } from "../OptimizationRequestContext/Optimiz
 function Solver(props) {
   const optimizationRequest = useContext(OptimizationRequestGlobal);
 
-  const solve = () => {
-    console.log(optimizationRequest);
+  const setSolution = async () => {
+    props.setSolution(await solve());
+  }
 
-    fetch('/optimize', {
-      method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(optimizationRequest)
+  function solve() {
+    return new Promise((resolve, reject) => {
+      fetch('/optimize', {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(optimizationRequest)
+      })
+        .then(result => resolve(result.json()))
+        .catch(error => reject(error))
     })
-      .then(result => console.log(result))
-      .catch(error => console.log(error));
   }
 
   return (
     <footer className="to-solver">
-      <button className="to-button to-button--solve" onClick={solve}>Solucionar</button>
+      <button className="to-button to-button--solve" onClick={setSolution}>Solucionar</button>
     </footer>
   );
 }

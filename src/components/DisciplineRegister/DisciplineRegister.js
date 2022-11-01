@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Discipline from "../../classes/Discipline/Discipline";
 import DisciplineRegisterBody from "../DisciplineRegisterBody/DisciplineRegisterBody";
 import HeaderDouble from "../HeaderDouble/HeaderDouble";
