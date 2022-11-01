@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Modal from 'react-modal';
 import Discipline from '../../classes/Discipline/Discipline';
+import { OptimizationRequestGlobal } from "../OptimizationRequestContext/OptimizationRequestContext";
 
 function ModalSchedule(props) {
+  const optimizationRequest = useContext(OptimizationRequestGlobal);
   const [discipline, setDiscipline] = useState(props.discipline);
 
   useEffect(() => {
@@ -10,13 +12,12 @@ function ModalSchedule(props) {
   }, []);
 
   const selectSchedule = event => {
-    const schedule = { ...discipline.schedule };
+    const newDiscipline = new Discipline({ ...discipline, [event.target.dataset.name]: event.target.checked ? 1 : 0 });
 
-    schedule.matrix[event.target.dataset.row][event.target.dataset.col] = event.target.checked ? 1 : 0;
+    optimizationRequest.variables[newDiscipline.id][event.target.dataset.name] = newDiscipline[event.target.dataset.name];
 
-    setDiscipline(new Discipline({ ...discipline, schedule }));
-
-    props.updateDisciplineSchedule(discipline.id, schedule);
+    setDiscipline(newDiscipline);
+    props.setDisciplines(props.disciplines);
   }
 
   return (
@@ -24,10 +25,11 @@ function ModalSchedule(props) {
       isOpen={props.isOpen}
       onRequestClose={props.closeModal}
       shouldCloseOnEsc={true}
-      shouldCloseOnOverlayClick={true}>
+      shouldCloseOnOverlayClick={true}
+      portalClassName="to-modal-schedule">
       <section>
         <header>
-          <h2>Horários</h2>
+          <h2>Horários ({discipline.name})</h2>
         </header>
         <div>
           <table>
@@ -44,56 +46,56 @@ function ModalSchedule(props) {
             <tbody>
               <tr>
                 <td>07:00 - 08:40</td>
-                <td>
-                  <input type="checkbox" checked={discipline.schedule.matrix[0][0]} data-col="0" data-row="0" onChange={selectSchedule} />
+                <td className='to-table__data--center'>
+                  <input type="checkbox" checked={discipline.mondayFirst} data-name="mondayFirst" onChange={selectSchedule} />
                 </td>
-                <td>
-                  <input type="checkbox" checked={discipline.schedule.matrix[0][1]} data-col="1" data-row="0" onChange={selectSchedule} />
+                <td className='to-table__data--center'>
+                  <input type="checkbox" checked={discipline.tuesdayFirst} data-name="tuesdayFirst" onChange={selectSchedule} />
                 </td>
-                <td>
-                  <input type="checkbox" checked={discipline.schedule.matrix[0][2]} data-col="2" data-row="0" onChange={selectSchedule} />
+                <td className='to-table__data--center'>
+                  <input type="checkbox" checked={discipline.wednesdayFirst} data-name="wednesdayFirst" onChange={selectSchedule} />
                 </td>
-                <td>
-                  <input type="checkbox" checked={discipline.schedule.matrix[0][3]} data-col="3" data-row="0" onChange={selectSchedule} />
+                <td className='to-table__data--center'>
+                  <input type="checkbox" checked={discipline.thursdayFirst} data-name="thursdayFirst" onChange={selectSchedule} />
                 </td>
-                <td>
-                  <input type="checkbox" checked={discipline.schedule.matrix[0][4]} data-col="4" data-row="0" onChange={selectSchedule} />
+                <td className='to-table__data--center'>
+                  <input type="checkbox" checked={discipline.fridayFirst} data-name="fridayFirst" onChange={selectSchedule} />
                 </td>
               </tr>
               <tr>
                 <td>08:50 - 10:30</td>
-                <td>
-                  <input type="checkbox" checked={discipline.schedule.matrix[1][0]} data-col="0" data-row="1" onChange={selectSchedule} />
+                <td className='to-table__data--center'>
+                  <input type="checkbox" checked={discipline.mondaySecond} data-name="mondaySecond" onChange={selectSchedule} />
                 </td>
-                <td>
-                  <input type="checkbox" checked={discipline.schedule.matrix[1][1]} data-col="1" data-row="1" onChange={selectSchedule} />
+                <td className='to-table__data--center'>
+                  <input type="checkbox" checked={discipline.tuesdaySecond} data-name="tuesdaySecond" onChange={selectSchedule} />
                 </td>
-                <td>
-                  <input type="checkbox" checked={discipline.schedule.matrix[1][2]} data-col="2" data-row="1" onChange={selectSchedule} />
+                <td className='to-table__data--center'>
+                  <input type="checkbox" checked={discipline.wednesdaySecond} data-name="wednesdaySecond" onChange={selectSchedule} />
                 </td>
-                <td>
-                  <input type="checkbox" checked={discipline.schedule.matrix[1][3]} data-col="3" data-row="1" onChange={selectSchedule} />
+                <td className='to-table__data--center'>
+                  <input type="checkbox" checked={discipline.thursdaySecond} data-name="thursdaySecond" onChange={selectSchedule} />
                 </td>
-                <td>
-                  <input type="checkbox" checked={discipline.schedule.matrix[1][4]} data-col="4" data-row="1" onChange={selectSchedule} />
+                <td className='to-table__data--center'>
+                  <input type="checkbox" checked={discipline.fridaySecond} data-name="fridaySecond" onChange={selectSchedule} />
                 </td>
               </tr>
               <tr>
                 <td>10:40 - 12:20</td>
-                <td>
-                  <input type="checkbox" checked={discipline.schedule.matrix[2][0]} data-col="0" data-row="2" onChange={selectSchedule} />
+                <td className='to-table__data--center'>
+                  <input type="checkbox" checked={discipline.mondayThird} data-name="mondayThird" onChange={selectSchedule} />
                 </td>
-                <td>
-                  <input type="checkbox" checked={discipline.schedule.matrix[2][1]} data-col="1" data-row="2" onChange={selectSchedule} />
+                <td className='to-table__data--center'>
+                  <input type="checkbox" checked={discipline.tuesdayThird} data-name="tuesdayThird" onChange={selectSchedule} />
                 </td>
-                <td>
-                  <input type="checkbox" checked={discipline.schedule.matrix[2][2]} data-col="2" data-row="2" onChange={selectSchedule} />
+                <td className='to-table__data--center'>
+                  <input type="checkbox" checked={discipline.wednesdayThird} data-name="wednesdayThird" onChange={selectSchedule} />
                 </td>
-                <td>
-                  <input type="checkbox" checked={discipline.schedule.matrix[2][3]} data-col="3" data-row="2" onChange={selectSchedule} />
+                <td className='to-table__data--center'>
+                  <input type="checkbox" checked={discipline.thursdayThird} data-name="thursdayThird" onChange={selectSchedule} />
                 </td>
-                <td>
-                  <input type="checkbox" checked={discipline.schedule.matrix[2][4]} data-col="4" data-row="2" onChange={selectSchedule} />
+                <td className='to-table__data--center'>
+                  <input type="checkbox" checked={discipline.fridayThird} data-name="fridayThird" onChange={selectSchedule} />
                 </td>
               </tr>
             </tbody>

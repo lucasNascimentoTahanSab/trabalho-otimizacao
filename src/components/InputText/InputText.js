@@ -15,7 +15,7 @@ function InputText(props) {
     <div className="to-input__container">
       {getLabel()}
       <input
-        className="to-input__item"
+        className="to-input"
         id={props.id + props.name}
         value={props.value}
         data-id={props.id}

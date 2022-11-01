@@ -1,29 +1,58 @@
-import React, { useState } from "react";
-import TimeConstraints from '../../classes/TimeConstraints/TimeConstraints';
+import React, { useContext, useState } from "react";
+import Constraints from "../../classes/Constraints/Constraints";
+import TimeConstraintParameters from '../../classes/TimeConstraintParameters/TimeConstraintParameters';
 import InputCurrency from "../InputCurrency/InputCurrency";
 import InputNumber from "../InputNumber/InputNumber";
+import { OptimizationRequestGlobal } from "../OptimizationRequestContext/OptimizationRequestContext";
 
 function OptimizeTimeBody(props) {
-  const [timeConstraints, setTimeConstraints] = useState(new TimeConstraints(props.timeConstraints));
+  const optimizationRequest = useContext(OptimizationRequestGlobal);
+  const [timeConstraints, setTimeConstraints] = useState(new TimeConstraintParameters(props.timeConstraints));
 
   const onMaximumCourseLoadInput = event => {
     if (typeof props.setTimeConstraints !== 'function') { return; }
 
-    const timeConstraintsUpdated = new TimeConstraints({ ...timeConstraints, maximumCourseLoad: event.target.value });
+    const timeConstraintsUpdated = new TimeConstraintParameters({ ...timeConstraints, maximumCourseLoad: parseFloat(event.target.value) });
 
+    setOptimizationRequest(timeConstraintsUpdated);
     setTimeConstraints(timeConstraintsUpdated);
     props.setTimeConstraints(timeConstraintsUpdated);
-    props.updateOptimizationRequest(timeConstraintsUpdated);
   }
 
   const onMaximumCostInput = event => {
     if (typeof props.setTimeConstraints !== 'function') { return; }
 
-    const timeConstraintsUpdated = new TimeConstraints({ ...timeConstraints, maximumCost: event.target.value });
+    const timeConstraintsUpdated = new TimeConstraintParameters({ ...timeConstraints, maximumCost: parseFloat(event.target.value) });
 
+    setOptimizationRequest(timeConstraintsUpdated);
     setTimeConstraints(timeConstraintsUpdated);
     props.setTimeConstraints(timeConstraintsUpdated);
-    props.updateOptimizationRequest(timeConstraintsUpdated);
+  }
+
+  function setOptimizationRequest(constraints) {
+    optimizationRequest.optimize = 'quantity';
+    optimizationRequest.opType = 'max';
+    optimizationRequest.constraints = getOptimizationConstraints(constraints);
+
+    generateVariableInts();
+  }
+
+  function generateVariableInts() {
+    Object.keys(optimizationRequest.variables)?.forEach(variable => optimizationRequest.ints[variable] = 1);
+  }
+
+  function getOptimizationConstraints(constraints) {
+    const newConstraints = new Constraints(optimizationRequest.constraints);
+    newConstraints.price = { max: constraints.maximumCost };
+    newConstraints.courseLoad = { max: constraints.maximumCourseLoad };
+
+    generateVariableConstraints(newConstraints);
+
+    return newConstraints;
+  }
+
+  function generateVariableConstraints(constraints) {
+    Object.keys(optimizationRequest.variables)?.forEach(variable => constraints[variable] = { max: 1 });
   }
 
   return (
@@ -31,19 +60,21 @@ function OptimizeTimeBody(props) {
       {
         props.show ?
           <div>
-            <header>
+            <header className="to-header">
               <h3>Restrições</h3>
             </header>
-            <InputNumber
-              label="Carga horária máxima por semestre"
-              name="maximumCourseLoad"
-              value={timeConstraints.maximumCourseLoad}
-              onInput={onMaximumCourseLoadInput} />
-            <InputCurrency
-              label="Custo máximo por semestre"
-              name="maximumCost"
-              value={timeConstraints.maximumCost}
-              onInput={onMaximumCostInput} />
+            <div className="to-constraints__section">
+              <InputNumber
+                label="Carga horária máxima por semestre"
+                name="maximumCourseLoad"
+                value={timeConstraints.maximumCourseLoad}
+                onInput={onMaximumCourseLoadInput} />
+              <InputCurrency
+                label="Custo máximo por semestre"
+                name="maximumCost"
+                value={timeConstraints.maximumCost}
+                onInput={onMaximumCostInput} />
+            </div>
           </div>
           : null
       }

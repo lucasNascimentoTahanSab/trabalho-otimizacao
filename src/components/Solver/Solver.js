@@ -1,19 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
+import { OptimizationRequestGlobal } from "../OptimizationRequestContext/OptimizationRequestContext";
 
 function Solver(props) {
-  const solve = () => {
-    fetch('/optimize', {
-      method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(props.body)
+  const optimizationRequest = useContext(OptimizationRequestGlobal);
+
+  const setSolution = async () => {
+    props.setSolution(await solve());
+  }
+
+  function solve() {
+    return new Promise((resolve, reject) => {
+      fetch('/optimize', {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(optimizationRequest)
+      })
+        .then(result => resolve(result.json()))
+        .catch(error => reject(error))
     })
-      .then(result => console.log(result))
-      .catch(error => console.log(error));
   }
 
   return (
-    <footer>
-      <button onClick={solve}>Solucionar</button>
+    <footer className="to-solver">
+      <button className="to-button to-button--solve" onClick={setSolution}>Solucionar</button>
     </footer>
   );
 }

@@ -8,7 +8,7 @@ function ButtonDelete(props) {
   }
 
   return (
-    <button onClick={onClick}>-</button>
+    <button className="to-button to-button--add" onClick={onClick}>-</button>
   );
 }
 
