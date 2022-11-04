@@ -11,8 +11,6 @@ app.post('/optimize', (req, res) => {
   try {
     const solution = solver.Solve(req.body);
 
-    console.log(solution);
-
     res.send(solution);
   } catch (error) {
     res.status(500);
